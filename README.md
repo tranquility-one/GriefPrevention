@@ -1,49 +1,87 @@
+# GriefPrevention
+
 <p align="center">
 <img alt="GriefPrevention" width=100% height=auto src="https://repository-images.githubusercontent.com/68339667/9b3f7c00-ce61-11ea-82d1-208eaa0606e8">
 </p>
 
-<h1 align="center">The self-service anti-griefing plugin for Minecraft servers since 2011</h1>
+[![GitHub release](https://img.shields.io/github/v/release/GriefPrevention/GriefPrevention)](https://github.com/GriefPrevention/GriefPrevention/releases/)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
 
-<p align="center">
-<a href="https://github.com/GriefPrevention/GriefPrevention/releases/"><img alt="Downloads" src="https://img.shields.io/badge/Downloads-green" height="70px"></a>
-<a href="https://r.griefprevention.com/docs"><img alt="Docs" src="https://img.shields.io/badge/Docs-gray?logo=readthedocs&logoColor=white" height="70px"></a>
-<a href="#support"><img alt="Get Help" src="https://img.shields.io/badge/Get%20Help-yellow?logo=amazoncloudwatch&logoColor=white" height="70px"></a>
+Self-service anti-griefing land claim plugin for Minecraft servers since 2011.
 
-</p>
-  
-Stop _responding_ to grief and prevent it instead. GriefPrevention stops grief before it starts automatically without any effort from administrators, and with very little (self service) effort from players.
+Stop _responding_ to grief and prevent it instead. GriefPrevention stops grief before it starts automatically without any effort from administrators, and with very little (self-service) effort from players. Players create and manage their own land claims using in-game tools — no admin intervention required.
 
-##### [Watch this video](https://www.youtube.com/watch?v=hKrA6NXn7Sc) to learn more how GriefPrevention works in-game.
-[![GriefPrevention Youtube Tutorial](https://img.youtube.com/vi/hKrA6NXn7Sc/0.jpg)](https://www.youtube.com/watch?v=hKrA6NXn7Sc)
+[Watch this video](https://www.youtube.com/watch?v=hKrA6NXn7Sc) to see how GriefPrevention works in-game.
 
----
+## Table of Contents
 
-## Supported Platforms: Spigot, Paper, and Purpur. 
-### GriefPrevention targets and supports the latest available version of these platforms. Older versions of GriefPrevention can be found on [BukkitDev](https://dev.bukkit.org/projects/grief-prevention/files). These older versions are not supported.
-Other server implementations of the Bukkit API _should_ work, but are untested.
+- [Background](#background)
+- [Install](#install)
+- [Usage](#usage)
+- [Addons](#addons)
+- [Versions](#versions)
+- [Contributing](#contributing)
+- [Support](#support)
+- [License](#license)
 
-## Download
-### [Download the GriefPrevention.jar plugin here.](https://github.com/GriefPrevention/GriefPrevention/releases/)
+## Background
+
+GriefPrevention was created in 2011 to provide a grief prevention solution that requires no administrator effort. It uses a claim-based land protection system where players can create, resize, and manage their own claims using a golden shovel.
+
+### Supported Platforms
+
+GriefPrevention targets and supports the latest available versions of **Spigot**, **Paper**, and **Purpur**. Other server implementations of the Bukkit API _should_ work but are untested. Older versions can be found on [BukkitDev](https://dev.bukkit.org/projects/grief-prevention/files) but are not supported.
+
+## Install
+
+1. Download the latest `GriefPrevention.jar` from [GitHub Releases](https://github.com/GriefPrevention/GriefPrevention/releases/).
+2. Place the JAR in your server's `plugins/` directory.
+3. Restart your server.
+
+### Building from Source
+
+Requires Java 21 and Maven.
+
+```sh
+mvn package
+```
+
+The built plugin JAR will be at `target/GriefPrevention.jar`.
+
+## Usage
+
+Once installed, GriefPrevention works out of the box with no configuration required. Players can create land claims using a golden shovel and manage trust permissions with commands.
+
+See the [documentation](https://r.griefprevention.com/docs) for full configuration and usage details.
 
 ## Addons
-### [Addons](https://r.griefprevention.com/addons) provide additional features to GriefPrevention. Some of these addons are listed in [GitHub Discussions](https://r.griefprevention.com/addons)
+
+[Addons](https://r.griefprevention.com/addons) provide additional features to GriefPrevention. Available addons are listed in [GitHub Discussions](https://r.griefprevention.com/addons).
+
+## Versions
+
+### GriefPrevention Legacy (v16)
+
+GriefPrevention Legacy is version 16, currently recommended for production servers. It continues to receive official updates. Development happens on the `legacy/v16` branch — target this branch for Legacy pull requests.
+
+### Version 17 and above
+
+Newer major versions are developed on the `master` branch. These versions contain **breaking changes** and should **not** be used on production servers.
+
+## Contributing
+
+Contributions are welcome. Please open an [issue](https://github.com/GriefPrevention/GriefPrevention/issues) or submit a pull request. For Legacy changes, target the `legacy/v16` branch; for current development, target `master`.
 
 ## Support
-- [📖 Documentation](https://r.griefprevention.com/docs) - Learn how GriefPrevention works. Contains answers to most questions.
-- [Issue Tracker](https://github.com/GriefPrevention/GriefPrevention/issues) - Report problems or bugs on the issue tracker. Check if someone else reported your issue before posting.
-- [GitHub Discussions](https://github.com/GriefPrevention/GriefPrevention/discussions) - New ideas, feature requests, or other general discussions.
+
+- [Documentation](https://r.griefprevention.com/docs) — Learn how GriefPrevention works. Contains answers to most questions.
+- [Issue Tracker](https://github.com/GriefPrevention/GriefPrevention/issues) — Report bugs. Check for existing reports before posting.
+- [GitHub Discussions](https://github.com/GriefPrevention/GriefPrevention/discussions) — Feature requests and general discussion.
 - [IRC Chat](https://griefprevention.com/chat/) or [Discord](https://r.griefprevention.com/dumcord/)
 
-## GriefPrevention Legacy
+## License
 
-GriefPrevention Legacy is the "friendly" name of GriefPrevention version 16. GriefPrevention version 16 will continue to be officially supported with new updates and releases, and is currently the version we recommend for use on production servers.
+[GPL-3.0-or-later](LICENSE.txt)
 
-GriefPrevention Legacy's development exists in the `legacy/v16` branch; be sure to target this branch if you intend to create any pull requests for GriefPrevention Legacy.
-
-## Version 17 and above
-
-Newer major versions of GriefPrevention are developed on the `master` branch. These new versions contain **breaking changes.** Please **do not** use these versions of GriefPrevention on production servers!
-
----
-
-[![Weird flex but ok](https://bstats.org/signatures/bukkit/GriefPrevention-legacy.svg)](https://bstats.org/plugin/bukkit/GriefPrevention-legacy)
+[![bStats](https://bstats.org/signatures/bukkit/GriefPrevention-legacy.svg)](https://bstats.org/plugin/bukkit/GriefPrevention-legacy)
