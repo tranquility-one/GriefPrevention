@@ -57,6 +57,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -232,7 +233,7 @@ public abstract class DataStore
             catch (Exception e)
             {
                 GriefPrevention.AddLogEntry("Failed to read from the soft mute data file: " + e);
-                e.printStackTrace();
+                GriefPrevention.instance.getLogger().log(Level.WARNING, "Failed to read soft mute data file", e);
             }
 
             try
@@ -263,7 +264,7 @@ public abstract class DataStore
         catch (Exception e)
         {
             GriefPrevention.AddLogEntry("Failed to read from the banned words data file: " + e);
-            e.printStackTrace();
+            GriefPrevention.instance.getLogger().log(Level.WARNING, "Failed to read banned words data file", e);
             return new ArrayList<>();
         }
     }
@@ -316,7 +317,7 @@ public abstract class DataStore
         catch (Exception e)
         {
             GriefPrevention.AddLogEntry("Unexpected exception saving soft mute data: " + e.getMessage());
-            e.printStackTrace();
+            GriefPrevention.instance.getLogger().log(Level.WARNING, "Unexpected exception saving soft mute data", e);
         }
 
         //close the file
@@ -1041,7 +1042,7 @@ public abstract class DataStore
             catch (Exception e)
             {
                 GriefPrevention.AddLogEntry("GriefPrevention: Unexpected exception saving data for player \"" + playerID.toString() + "\": " + e.getMessage());
-                e.printStackTrace();
+                GriefPrevention.instance.getLogger().log(Level.WARNING, "Unexpected exception saving player data for " + playerID, e);
             }
         }
     }

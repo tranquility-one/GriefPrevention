@@ -25,6 +25,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -116,7 +117,7 @@ class CustomLogger
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            GriefPrevention.instance.getLogger().log(Level.WARNING, "Error writing log entries", e);
         }
     }
 
@@ -162,7 +163,7 @@ class CustomLogger
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            GriefPrevention.instance.getLogger().log(Level.WARNING, "Error deleting expired logs", e);
         }
     }
 

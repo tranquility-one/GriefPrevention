@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
 import java.util.regex.Matcher;
 
 //manages data stored in the file system
@@ -164,7 +165,7 @@ public class FlatFileDataStore extends DataStore
             catch (Exception e)
             {
                 GriefPrevention.AddLogEntry("Failed to resolve a batch of names to UUIDs.  Details:" + e.getMessage());
-                e.printStackTrace();
+                GriefPrevention.instance.getLogger().log(Level.WARNING, "Failed to resolve names to UUIDs", e);
             }
 
             //rename files
@@ -726,7 +727,7 @@ public class FlatFileDataStore extends DataStore
         catch (Exception e)
         {
             GriefPrevention.AddLogEntry("GriefPrevention: Unexpected exception saving data for player \"" + playerID + "\": " + e.getMessage());
-            e.printStackTrace();
+            GriefPrevention.instance.getLogger().log(Level.WARNING, "Unexpected exception saving player data for " + playerID, e);
         }
     }
 
@@ -752,7 +753,7 @@ public class FlatFileDataStore extends DataStore
         catch (Exception e)
         {
             GriefPrevention.AddLogEntry("Unexpected exception saving next claim ID: " + e.getMessage());
-            e.printStackTrace();
+            GriefPrevention.instance.getLogger().log(Level.WARNING, "Unexpected exception saving next claim ID", e);
         }
 
         //close the file

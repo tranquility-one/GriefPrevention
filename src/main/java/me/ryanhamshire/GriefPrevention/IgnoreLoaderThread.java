@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
 
 //loads ignore data from file into a hash map
 class IgnoreLoaderThread extends Thread
@@ -80,7 +81,7 @@ class IgnoreLoaderThread extends Thread
         if (needRetry)
         {
             GriefPrevention.AddLogEntry("Retry attempts exhausted.  Unable to load ignore data for player \"" + playerToLoad.toString() + "\": " + latestException);
-            latestException.printStackTrace();
+            GriefPrevention.instance.getLogger().log(Level.WARNING, "Unable to load ignore data for player " + playerToLoad, latestException);
         }
     }
 }

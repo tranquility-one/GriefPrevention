@@ -27,7 +27,8 @@ import org.jetbrains.annotations.Nullable;
 import java.net.InetAddress;
 import java.util.Calendar;
 import java.util.UUID;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 //holds all of GriefPrevention's player-tied data
@@ -37,7 +38,7 @@ public class PlayerData
     public UUID playerID;
 
     //the player's claims
-    private Vector<Claim> claims = null;
+    private ArrayList<Claim> claims = null;
 
     //how many claim blocks the player has earned via play time
     private Integer accruedClaimBlocks = null;
@@ -260,11 +261,11 @@ public class PlayerData
         }
     }
 
-    public Vector<Claim> getClaims()
+    public List<Claim> getClaims()
     {
         if (this.claims == null)
         {
-            this.claims = new Vector<>();
+            this.claims = new ArrayList<>();
 
             //find all the claims belonging to this player and note them for future reference
             DataStore dataStore = GriefPrevention.instance.dataStore;

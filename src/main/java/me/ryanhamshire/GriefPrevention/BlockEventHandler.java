@@ -189,8 +189,7 @@ public class BlockEventHandler implements Listener
 
             if (!player.hasPermission("griefprevention.eavesdropsigns"))
             {
-                @SuppressWarnings("unchecked")
-                Collection<Player> players = (Collection<Player>) GriefPrevention.instance.getServer().getOnlinePlayers();
+                Collection<? extends Player> players = GriefPrevention.instance.getServer().getOnlinePlayers();
                 for (Player otherPlayer : players)
                 {
                     if (otherPlayer.hasPermission("griefprevention.eavesdropsigns"))

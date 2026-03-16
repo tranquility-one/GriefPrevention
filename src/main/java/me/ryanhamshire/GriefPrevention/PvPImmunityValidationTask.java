@@ -49,7 +49,7 @@ class PvPImmunityValidationTask implements Runnable
         else
         {
             //otherwise check again in one minute
-            GriefPrevention.instance.getServer().getScheduler().scheduleSyncDelayedTask(GriefPrevention.instance, this, 1200L);
+            GriefPrevention.instance.getServer().getScheduler().runTaskLater(GriefPrevention.instance, this, 1200L);
         }
     }
 }

@@ -39,6 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
+import java.util.logging.Level;
 
 //manages data stored in the file system
 public class DatabaseDataStore extends DataStore
@@ -128,7 +129,7 @@ public class DatabaseDataStore extends DataStore
         {
             GriefPrevention.AddLogEntry("ERROR: Unable to create the necessary database table.  Details:");
             GriefPrevention.AddLogEntry(e3.getMessage());
-            e3.printStackTrace();
+            GriefPrevention.instance.getLogger().log(Level.WARNING, "Unable to create database table", e3);
             throw e3;
         }
 
@@ -199,7 +200,7 @@ public class DatabaseDataStore extends DataStore
                 catch (Exception e)
                 {
                     GriefPrevention.AddLogEntry("Failed to resolve a batch of names to UUIDs.  Details:" + e.getMessage());
-                    e.printStackTrace();
+                    GriefPrevention.instance.getLogger().log(Level.WARNING, "Failed to resolve names to UUIDs", e);
                 }
 
                 //reset results cursor
@@ -248,7 +249,7 @@ public class DatabaseDataStore extends DataStore
             {
                 GriefPrevention.AddLogEntry("Unable to convert player data.  Details:");
                 GriefPrevention.AddLogEntry(e.getMessage());
-                e.printStackTrace();
+                GriefPrevention.instance.getLogger().log(Level.WARNING, "Unable to convert player data", e);
             }
         }
 
@@ -366,7 +367,7 @@ public class DatabaseDataStore extends DataStore
             catch (SQLException e)
             {
                 GriefPrevention.AddLogEntry("Unable to load a claim.  Details: " + e.getMessage() + " ... " + results);
-                e.printStackTrace();
+                GriefPrevention.instance.getLogger().log(Level.WARNING, "Unable to load a claim", e);
             }
         }
 
@@ -481,7 +482,7 @@ public class DatabaseDataStore extends DataStore
         {
             GriefPrevention.AddLogEntry("Unable to delete data for claim " + claim.id + ".  Details:");
             GriefPrevention.AddLogEntry(e.getMessage());
-            e.printStackTrace();
+            GriefPrevention.instance.getLogger().log(Level.WARNING, "Unable to delete claim " + claim.id, e);
         }
     }
 
@@ -662,7 +663,7 @@ public class DatabaseDataStore extends DataStore
         {
             GriefPrevention.AddLogEntry("Unable to retrieve schema version from database.  Details:");
             GriefPrevention.AddLogEntry(e.getMessage());
-            e.printStackTrace();
+            GriefPrevention.instance.getLogger().log(Level.WARNING, "Unable to retrieve schema version", e);
             return 0;
         }
     }

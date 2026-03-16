@@ -24,7 +24,8 @@ import org.bukkit.OfflinePlayer;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 class CleanupUnusedClaimTask implements Runnable
 {
@@ -78,7 +79,7 @@ class CleanupUnusedClaimTask implements Runnable
                 if (expireEventCanceled())
                     return;
                 //make a copy of this player's claim list
-                Vector<Claim> claims = new Vector<>(ownerData.getClaims());
+                List<Claim> claims = new ArrayList<>(ownerData.getClaims());
 
                 //delete them
                 GriefPrevention.instance.dataStore.deleteClaimsForPlayer(claim.ownerID, true);

@@ -74,7 +74,6 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 import java.util.UUID;
-import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
@@ -303,7 +302,7 @@ public class GriefPrevention extends JavaPlugin
             catch (Exception e)
             {
                 GriefPrevention.AddLogEntry("Because there was a problem with the database, GriefPrevention will not function properly.  Either update the database config settings resolve the issue, or delete those lines from your config.yml so that GriefPrevention can use the file system to store data.");
-                e.printStackTrace();
+                getLogger().log(Level.WARNING, "Database initialization error", e);
                 this.getServer().getPluginManager().disablePlugin(this);
                 return;
             }
@@ -333,7 +332,7 @@ public class GriefPrevention extends JavaPlugin
             {
                 GriefPrevention.AddLogEntry("Unable to initialize the file system data store.  Details:");
                 GriefPrevention.AddLogEntry(e.getMessage());
-                e.printStackTrace();
+                getLogger().log(Level.WARNING, "Unable to initialize file system data store", e);
             }
         }
 
@@ -345,12 +344,12 @@ public class GriefPrevention extends JavaPlugin
         if (this.config_claims_blocksAccruedPerHour_default > 0)
         {
             DeliverClaimBlocksTask task = new DeliverClaimBlocksTask(null, this);
-            this.getServer().getScheduler().scheduleSyncRepeatingTask(this, task, 20L * 60 * 10, 20L * 60 * 10);
+            this.getServer().getScheduler().runTaskTimer(this, task, 20L * 60 * 10, 20L * 60 * 10);
         }
 
         //start recurring cleanup scan for unused claims belonging to inactive players
         FindUnusedClaimsTask task2 = new FindUnusedClaimsTask();
-        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, task2, 20L * 60, 20L * config_advanced_claim_expiration_check_rate);
+        this.getServer().getScheduler().runTaskTimer(this, task2, 20L * 60, 20L * config_advanced_claim_expiration_check_rate);
 
         //register for events
         PluginManager pluginManager = this.getServer().getPluginManager();
@@ -386,8 +385,7 @@ public class GriefPrevention extends JavaPlugin
         namesThread.start();
 
         //load ignore lists for any already-online players
-        @SuppressWarnings("unchecked")
-        Collection<Player> players = (Collection<Player>) GriefPrevention.instance.getServer().getOnlinePlayers();
+        Collection<? extends Player> players = GriefPrevention.instance.getServer().getOnlinePlayers();
         for (Player player : players)
         {
             new IgnoreLoaderThread(player.getUniqueId(), this.dataStore.getPlayerData(player.getUniqueId()).ignoredPlayers).start();
@@ -1855,7 +1853,7 @@ public class GriefPrevention extends JavaPlugin
 
             //load the target player's data
             PlayerData playerData = this.dataStore.getPlayerData(otherPlayer.getUniqueId());
-            Vector<Claim> claims = playerData.getClaims();
+            List<Claim> claims = playerData.getClaims();
             GriefPrevention.sendMessage(player, TextMode.Instr, Messages.StartBlockMath,
                     String.valueOf(playerData.getAccruedClaimBlocks()),
                     String.valueOf((playerData.getBonusClaimBlocks() + this.dataStore.getGroupBonusBlocks(otherPlayer.getUniqueId()))),
@@ -1883,7 +1881,7 @@ public class GriefPrevention extends JavaPlugin
         else if (cmd.getName().equalsIgnoreCase("adminclaimslist"))
         {
             //find admin claims
-            Vector<Claim> claims = new Vector<>();
+            List<Claim> claims = new ArrayList<>();
             for (Claim claim : this.dataStore.claims)
             {
                 if (claim.ownerID == null)  //admin claim
@@ -2017,8 +2015,7 @@ public class GriefPrevention extends JavaPlugin
             }
 
             //for each online player
-            @SuppressWarnings("unchecked")
-            Collection<Player> players = (Collection<Player>) this.getServer().getOnlinePlayers();
+            Collection<? extends Player> players = this.getServer().getOnlinePlayers();
             StringBuilder builder = new StringBuilder();
             for (Player onlinePlayer : players)
             {
@@ -2115,7 +2112,7 @@ public class GriefPrevention extends JavaPlugin
 
             //create a task to rescue this player in a little while
             PlayerRescueTask task = new PlayerRescueTask(player, player.getLocation(), event.getDestination());
-            this.getServer().getScheduler().scheduleSyncDelayedTask(this, task, 200L);  //20L ~ 1 second
+            this.getServer().getScheduler().runTaskLater(this, task, 200L);  //20L ~ 1 second
 
             return true;
         }
@@ -2580,7 +2577,7 @@ public class GriefPrevention extends JavaPlugin
                 }
                 catch (Exception e)
                 {
-                    e.printStackTrace();
+                    getLogger().log(Level.WARNING, "Error caching offline player names", e);
                 }
             }
         }
@@ -2721,8 +2718,7 @@ public class GriefPrevention extends JavaPlugin
     public void onDisable()
     {
         //save data for any online players
-        @SuppressWarnings("unchecked")
-        Collection<Player> players = (Collection<Player>) this.getServer().getOnlinePlayers();
+        Collection<? extends Player> players = this.getServer().getOnlinePlayers();
         for (Player player : players)
         {
             UUID playerID = player.getUniqueId();
@@ -2765,7 +2761,7 @@ public class GriefPrevention extends JavaPlugin
 
             //start a task to re-check this player's inventory every minute until his immunity is gone
             PvPImmunityValidationTask task = new PvPImmunityValidationTask(player);
-            this.getServer().getScheduler().scheduleSyncDelayedTask(this, task, 1200L);
+            this.getServer().getScheduler().runTaskLater(this, task, 1200L);
         }
     }
 

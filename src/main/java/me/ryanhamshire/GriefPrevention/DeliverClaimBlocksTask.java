@@ -22,6 +22,7 @@ import me.ryanhamshire.GriefPrevention.events.AccrueClaimBlocksEvent;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
+import java.util.logging.Level;
 
 //FEATURE: give players claim blocks for playing, as long as they're not away from their computer
 
@@ -43,14 +44,13 @@ class DeliverClaimBlocksTask implements Runnable
         //if no player specified, this task will create a player-specific task for each online player, scheduled one tick apart
         if (this.player == null)
         {
-            @SuppressWarnings("unchecked")
-            Collection<Player> players = (Collection<Player>) GriefPrevention.instance.getServer().getOnlinePlayers();
+            Collection<? extends Player> players = GriefPrevention.instance.getServer().getOnlinePlayers();
 
             long i = 0;
             for (Player onlinePlayer : players)
             {
                 DeliverClaimBlocksTask newTask = new DeliverClaimBlocksTask(onlinePlayer, instance);
-                instance.getServer().getScheduler().scheduleSyncDelayedTask(instance, newTask, i++);
+                instance.getServer().getScheduler().runTaskLater(instance, newTask, i++);
             }
 
             return; //tasks started for each player
@@ -102,7 +102,7 @@ class DeliverClaimBlocksTask implements Runnable
         catch (Exception e)
         {
             GriefPrevention.AddLogEntry("Problem delivering claim blocks to player " + player.getName() + ":");
-            e.printStackTrace();
+            GriefPrevention.instance.getLogger().log(Level.WARNING, "Problem delivering claim blocks to " + player.getName(), e);
         }
     }
 }
